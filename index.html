@@ -20,7 +20,7 @@ nav {
     padding: 20px 50px;
     align-items: center;
     position: sticky;
-    top: 0;
+    top: 0; 
     background: #081b29;
 }
 
@@ -267,6 +267,110 @@ button {
     color: #081b29;
 }
 
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+
+    /* Navbar */
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+        gap: 10px;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        font-size: 14px;
+    }
+
+    /* Hero */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+        gap: 20px;
+    }
+
+    .circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .right h1 {
+        font-size: 28px;
+    }
+
+    .right h4,
+    .right h2,
+    .right p {
+        margin: 6px 0;
+    }
+
+    /* Stats */
+    .stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    /* Sections */
+    section {
+        padding: 30px 20px;
+    }
+
+    /* Skills */
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Projects */
+    .project:hover {
+        transform: none;
+    }
+
+    /* Contact form */
+    input, textarea {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+    }
+
+    /* Social links */
+    .social {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .social a {
+        width: 80%;
+        text-align: center;
+        margin: 0;
+    }
+
+    /* Popup */
+    .popup-box {
+        padding: 25px 20px;
+    }
+}
 </style>
 </head>
 
