@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nivedha Portfolio</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #081b29;
+    color: white;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: #081b29;
+}
+
+.logo span { color: #00abf0; }
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav ul li {
+    cursor: pointer;
+}
+
+.cv-btn {
+    background: #ff4d6d;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 20px;
+}
+
+/* Hero */
+.hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 60px;
+    flex-wrap: wrap;
+}
+.circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(#00abf0, transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* important */
+}
+
+.circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* makes image fit perfectly */
+    border-radius: 50%;
+}
+
+.right h1 { 
+    font-size: 40px; 
+}
+
+.right span { 
+    color: #00abf0; 
+}/* Section */
+section {
+    padding: 50px;
+}
+
+h2 {
+    color: #00abf0;
+    margin-bottom: 20px;
+}
+
+/* Skills */
+.skills span {
+    display: inline-block;
+    background: #00abf0;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* Projects */
+.project {
+    margin-bottom: 20px;
+    border-left: 3px solid #00abf0;
+    padding-left: 15px;
+}
+
+/* Contact */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background: #00abf0;
+    color: white;
+    cursor: pointer;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+    border-top: 1px solid #1f3a4d;
+    flex-wrap: wrap;
+}
+
+.stats h2 { color: #00abf0; }
+
+/* ── Popup Overlay ── */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.25s ease;
+}
+
+.popup-overlay.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.popup-box {
+    background: #0d2137;
+    border: 1px solid #00abf0;
+    border-radius: 16px;
+    padding: 35px 40px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.popup-box h3 {
+    color: #00abf0;
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.popup-box p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.popup-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+.popup-close:hover { color: #ff4d6d; }
+
+/* Welcome popup icon */
+.popup-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+/* Project cards — clickable */
+.project {
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.project:hover {
+    background: rgba(0,171,240,0.08);
+    transform: translateX(6px);
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success { background: #00abf0; }
+.toast.error   { background: #ff4d6d; }
+
+/* Social links */
+.social {
+    margin-top: 20px;
+}
+
+.social p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.social a {
+    display: inline-block;
+    margin: 6px 10px;
+    padding: 10px 22px;
+    border: 2px solid #00abf0;
+    border-radius: 25px;
+    color: #00abf0;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.social a:hover {
+    background: #00abf0;
+    color: #081b29;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav>
+    <h2 class="logo">Nivedha<span>Portfolio</span></h2>
+    <ul>
+        <li onclick="scrollToSection('home')">Home</li>
+        <li onclick="scrollToSection('about')">About</li>
+        <li onclick="scrollToSection('skills')">Skills</li>
+        <li onclick="scrollToSection('projects')">Projects</li>
+        <li onclick="scrollToSection('contact')">Contact</li>
+    </ul>
+   </nav>
+
+<!-- Hero -->
+<section id="home" class="hero">
+
+<div class="circle">
+    <img src="47d5ea6b-608e-43aa-9cee-9a63a2f9f182.jpg" alt="Nivedha L">
+</div>
+
+<div class="right">
+    <h4>Hello, I'm</h4>
+    <h1>Nivedha L</h1>
+    <h2>I'm a <span id="typing"></span></h2>
+    <p>
+BSc Computer Science student with a strong interest in developing practical and user-friendly applications that solve real-world problems. Passionate about learning new technologies, improving problem-solving skills, and building meaningful projects that create a positive impact.    </p>
+</div>
+
+</section>
+
+<!-- Stats -->
+<section class="stats">
+    <div><h2>2nd</h2><p>Year Student</p></div>
+    <div><h2>5+</h2><p>Projects</p></div>
+    <div><h2>6+</h2><p>Skills</p></div>
+    <div><h2>100%</h2><p>Dedication</p></div>
+</section>
+
+<!-- About -->
+<section id="about">
+<h2>About Me</h2>
+<p>
+Motivated B.Sc. Computer Science student with a strong interest in IoT systems, Java programming, and assistive technologies. I enjoy developing practical solutions that address real-world problems, including projects focused on improving accessibility and user support. I have hands-on experience in programming languages such as Java, Python, and C/C++, along with basic knowledge of Arduino and embedded systems.
+
+I am passionate about learning new technologies, enhancing my problem-solving skills, and building innovative applications. My goal is to contribute to impactful projects, grow as a developer, and pursue a career in the field of technology and research.</p>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+<h2>Technical Skills</h2>
+<div class="skills">
+    <span>Java</span>
+    <span>Python</span>
+    <span>Arduino</span>
+    <span>IoT</span>
+    <span>Web Page</span>
+    <span>Problem Solving</span>
+    <span>Video Editing</span>
+</div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+<h2>Projects</h2>
+
+<div class="project" onclick="openPopup('popup-smartstick')">
+    <h3>Smart Blind Stick</h3>
+    <p>
+        Developed assistive device using Arduino and ultrasonic sensors
+        to detect obstacles and help visually impaired people.
+    </p>
+</div>
+
+<div class="project" onclick="openPopup('popup-bluetooth')">
+    <h3>Bluetooth Terminal App</h3>
+    <p>
+       Developed a mobile application that connects with Arduino via Bluetooth, receives real-time sensor data, and converts it into voice output using text-to-speech to assist users. 
+    </p>
+</div>
+
+<div class="project" onclick="openPopup('popup-webdev')">
+    <h3>Web Development</h3>
+    <p>
+        I have created a personal portfolio website using web development technologies like HTML, CSS, and JavaScript.
+    </p>
+</div>
+
+
+<div class="project" onclick="openPopup('popup-paper')">
+    <h3>Paper Presentation</h3>
+    <p>
+        Presented technical concepts and improved communication skills.
+    </p>
+</div>
+
+</section>
+
+<!-- Contact -->
+<section id="contact">
+<h2>Contact Me</h2>
+
+<form id="contactForm">
+<input type="text" id="name" placeholder="Name">
+<input type="email" id="email" placeholder="Email">
+<textarea id="message" placeholder="Message"></textarea>
+<button type="submit">Send Message</button>
+<p id="formStatus"></p>
+</form>
+<center>
+<div class="social">
+    <p>Connect with me:</p>
+    <a href="mailto:24csnivedha@gmail.com" target="_blank">📧 Email</a>
+    <a href="https://www.linkedin.com/" target="_blank">🔗 LinkedIn</a>
+    <a href="https://github.com/nive271628-svg" target="_blank">🐙 GitHub</a>
+</div>
+</center>
+
+</section>
+
+
+
+<!-- ══════════════════════════════════
+     PROJECT DETAIL POPUPS
+══════════════════════════════════ -->
+<div class="popup-overlay" id="popup-smartstick">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('popup-smartstick')">✕</button>
+        <h3>Smart Blind Stick</h3>
+        <p>An assistive device built with <strong>Arduino</strong> and <strong>ultrasonic sensors</strong> that detects obstacles in real time and alerts visually impaired users through vibration and audio feedback.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> Arduino, C/C++, Ultrasonic Sensor, Buzzer</p>
+    </div>
+</div>
+
+<div class="popup-overlay" id="popup-bluetooth">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('popup-bluetooth')">✕</button>
+        <h3> Bluetooth Terminal App</h3>
+        <p>A mobile application that pairs with Arduino over <strong>Bluetooth</strong>, receives live sensor data, and converts it to voice output using <strong>Text-to-Speech</strong> to assist users.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> Android, Bluetooth, Arduino, TTS API</p>
+    </div>
+</div>
+
+<div class="popup-overlay" id="popup-webdev">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('popup-webdev')">✕</button>
+        <h3>🌐 Web Development</h3>
+        <p>Designed and built a personal portfolio website from scratch using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong> — featuring smooth scrolling, animations, and a contact form.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> HTML5, CSS3, JavaScript</p>
+    </div>
+</div>
+
+<div class="popup-overlay" id="popup-paper">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('popup-paper')">✕</button>
+        <h3>📄 Paper Presentation</h3>
+        <p>Presented technical research papers on emerging topics in computer science, sharpening both <strong>communication</strong> and <strong>analytical skills</strong> in a competitive academic setting.</p>
+        <p><strong style="color:#00abf0">Skills:</strong> Research, Public Speaking, Technical Writing</p>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     TOAST NOTIFICATION
+══════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── Popup helpers ── */
+function openPopup(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePopup(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close popup when clicking outside the box
+document.querySelectorAll('.popup-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+        if (e.target === this) closePopup(this.id);
+    });
+});
+
+// Close popups with Escape key
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.popup-overlay.active').forEach(el => closePopup(el.id));
+    }
+});
+
+/* ── Toast helper ── */
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => { toast.className = 'toast'; }, 3500);
+}
+
+/* Typing */
+const text = ["Java Developer", "IoT Developer", "Web Learner"];
+let i=0,j=0,current="",isDeleting=false;
+
+function type(){
+if(i<text.length){
+if(!isDeleting && j<=text[i].length){
+current=text[i].substring(0,j++);
+}
+else if(isDeleting && j>=0){
+current=text[i].substring(0,j--);
+}
+document.getElementById("typing").innerHTML=current;
+
+if(j==text[i].length) isDeleting=true;
+if(j==0){isDeleting=false;i++;}
+}else{i=0;}
+setTimeout(type,100);
+}
+type();
+
+/* Scroll */
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+/* Contact Form */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcSm9Y39eW0AIcarm93E9-RyO55tMFzsCeDJ68KBJOwhQwPdSIHkSEt0eM3z2H5_fL/exec';
+
+document.getElementById('contactForm').addEventListener('submit', async(e)=>{
+e.preventDefault();
+
+const status=document.getElementById('formStatus');
+
+const data={
+name: name.value,
+phone: email.value,
+message: message.value
+};
+
+try{
+const res=await fetch(SCRIPT_URL,{
+method:'POST',
+headers:{'Content-Type':'text/plain'},
+body:JSON.stringify(data)
+});
+const result=await res.json();
+
+if(result.status==="success"){
+showToast("✅ Message sent successfully!");
+document.getElementById('contactForm').reset();
+}else{
+showToast("❌ Something went wrong. Try again.", "error");
+}
+}catch{
+showToast("❌ Failed to send. Check your connection.", "error");
+}
+});
+</script>
+
+</body>
+</html>
