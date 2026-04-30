@@ -267,108 +267,199 @@ button {
     color: #081b29;
 }
 
-/* ── Mobile Responsive ── */
+/* ── Hamburger Button ── */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 200;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #00abf0;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Animate hamburger → X */
+.hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── Mobile: match PC layout ── */
 @media (max-width: 768px) {
 
     /* Navbar */
     nav {
-        flex-direction: column;
-        align-items: flex-start;
         padding: 15px 20px;
-        gap: 10px;
+        flex-wrap: nowrap;
+        position: relative;
+    }
+
+    .hamburger {
+        display: flex;
     }
 
     nav ul {
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 0;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
         margin: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #081b29;
+        border-top: 1px solid #1f3a4d;
+        z-index: 100;
+        text-align: center;
+    }
+
+    nav ul.open {
+        display: flex;
     }
 
     nav ul li {
-        font-size: 14px;
+        font-size: 15px;
+        padding: 12px 0;
+        border-bottom: 1px solid #1f3a4d;
     }
 
-    /* Hero */
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    /* Hero — keep side by side, shrink sizes */
     .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px 20px;
-        gap: 20px;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 30px 15px;
+        flex-wrap: nowrap;
+        gap: 15px;
     }
 
     .circle {
-        width: 200px;
-        height: 200px;
+        width: 130px;
+        height: 130px;
+        flex-shrink: 0;
+    }
+
+    .right {
+        flex: 1;
+        min-width: 0;
     }
 
     .right h1 {
-        font-size: 28px;
+        font-size: 22px;
+        margin: 4px 0;
     }
 
-    .right h4,
-    .right h2,
+    .right h2 {
+        font-size: 16px;
+        margin: 4px 0;
+    }
+
+    .right h4 {
+        font-size: 13px;
+        margin: 4px 0;
+    }
+
     .right p {
-        margin: 6px 0;
+        font-size: 12px;
+        line-height: 1.5;
+        margin: 6px 0 0;
     }
 
-    /* Stats */
+    /* Stats — keep horizontal row */
     .stats {
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        padding: 30px 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 25px 15px;
+        gap: 10px;
         text-align: center;
+    }
+
+    .stats div {
+        flex: 1 1 40%;
+    }
+
+    .stats h2 {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .stats p {
+        font-size: 12px;
+        margin: 2px 0 0;
     }
 
     /* Sections */
     section {
-        padding: 30px 20px;
+        padding: 30px 15px;
     }
 
     /* Skills */
     .skills {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+    }
+
+    .skills span {
+        font-size: 13px;
+        padding: 6px 12px;
     }
 
     /* Projects */
-    .project:hover {
-        transform: none;
+    .project h3 {
+        font-size: 16px;
+    }
+
+    .project p {
+        font-size: 13px;
     }
 
     /* Contact form */
     input, textarea {
         box-sizing: border-box;
         width: 100%;
+        font-size: 14px;
     }
 
-    textarea {
-        min-height: 100px;
-    }
-
-    button[type="submit"] {
-        width: 100%;
-    }
-
-    /* Social links */
+    /* Social links — keep inline row */
     .social {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
     }
 
     .social a {
-        width: 80%;
-        text-align: center;
+        font-size: 13px;
+        padding: 8px 14px;
         margin: 0;
     }
 
     /* Popup */
     .popup-box {
-        padding: 25px 20px;
+        padding: 20px 16px;
+        width: 92%;
     }
 }
 </style>
@@ -379,14 +470,19 @@ button {
 <!-- Navbar -->
 <nav>
     <h2 class="logo">Nivedha<span>Portfolio</span></h2>
-    <ul>
-        <li onclick="scrollToSection('home')">Home</li>
-        <li onclick="scrollToSection('about')">About</li>
-        <li onclick="scrollToSection('skills')">Skills</li>
-        <li onclick="scrollToSection('projects')">Projects</li>
-        <li onclick="scrollToSection('contact')">Contact</li>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul id="navMenu">
+        <li onclick="navClick('home')">Home</li>
+        <li onclick="navClick('about')">About</li>
+        <li onclick="navClick('skills')">Skills</li>
+        <li onclick="navClick('projects')">Projects</li>
+        <li onclick="navClick('contact')">Contact</li>
     </ul>
-   </nav>
+</nav>
 
 <!-- Hero -->
 <section id="home" class="hero">
@@ -541,6 +637,24 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
 <div class="toast" id="toast"></div>
 
 <script>
+/* ── Hamburger Menu ── */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('navMenu');
+
+hamburger.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+});
+
+// Close menu when a nav link is clicked
+function navClick(id) {
+    navMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+    scrollToSection(id);
+}
+
 /* ── Popup helpers ── */
 function openPopup(id) {
     document.getElementById(id).classList.add('active');
