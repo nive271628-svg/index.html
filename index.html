@@ -583,6 +583,7 @@ button:active { transform: translateY(0); }
     nav ul.open li:nth-child(3) { transition-delay: 0.20s; }
     nav ul.open li:nth-child(4) { transition-delay: 0.26s; }
     nav ul.open li:nth-child(5) { transition-delay: 0.32s; }
+    nav ul.open li:nth-child(6) { transition-delay: 0.38s; }
 
     nav ul li:last-child {
         border-bottom: none;
@@ -708,6 +709,244 @@ button:active { transform: translateY(0); }
         width: 92%;
     }
 }
+/* ── My Works Cards ── */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    margin-top: 20px;
+}
+
+.work-card {
+    background: linear-gradient(160deg, #0d2137 0%, #0a1828 100%);
+    border: 1px solid rgba(0,171,240,0.2);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    display: block;
+    transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s, border-color 0.35s;
+    position: relative;
+    opacity: 0;
+    transform: translateY(36px);
+}
+
+.work-card.work-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s ease, transform 0.55s ease,
+                box-shadow 0.35s, border-color 0.35s;
+}
+
+.work-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,171,240,0.25);
+    border-color: rgba(0,171,240,0.65);
+}
+
+.work-card--founder {
+    border-color: rgba(255,77,109,0.45);
+    box-shadow: 0 0 0 1px rgba(255,77,109,0.15), 0 8px 30px rgba(255,77,109,0.12);
+}
+
+.work-card--founder:hover {
+    box-shadow: 0 20px 50px rgba(255,77,109,0.35), 0 0 0 1px rgba(255,77,109,0.5);
+    border-color: rgba(255,77,109,0.75);
+}
+
+/* Glowing top border line */
+.work-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 15%; right: 15%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00abf0, transparent);
+    border-radius: 2px;
+    z-index: 2;
+}
+
+.work-card--founder::before {
+    background: linear-gradient(90deg, transparent, #ff4d6d, transparent);
+}
+
+/* ── iframe live preview ── */
+.work-preview-wrap {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #060f1a;
+    border-bottom: 1px solid rgba(0,171,240,0.12);
+}
+
+.work-iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    transform: scale(0.34);
+    transform-origin: top left;
+    pointer-events: none;
+    position: absolute;
+    top: 0; left: 0;
+    /* scale width back: 100% / 0.34 ≈ 294% */
+    width: 294%;
+}
+
+/* transparent click-capture layer */
+.iframe-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(to bottom,
+        transparent 55%,
+        rgba(8,27,41,0.85) 100%);
+}
+
+/* Live dot badge */
+.work-live-dot {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 3;
+    background: rgba(8,27,41,0.75);
+    border: 1px solid rgba(0,171,240,0.3);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    font-size: 11px;
+    padding: 4px 10px;
+    color: #00e676;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.work-live-dot span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00e676;
+    display: inline-block;
+    box-shadow: 0 0 6px #00e676;
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* Founder ribbon */
+.work-founder-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 3;
+    background: linear-gradient(135deg, #ff4d6d, #c0392b);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 12px rgba(255,77,109,0.7), 0 0 28px rgba(255,77,109,0.4);
+    animation: founderGlow 2s ease-in-out infinite;
+}
+
+@keyframes founderGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255,77,109,0.7), 0 0 24px rgba(255,77,109,0.35);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255,77,109,1), 0 0 45px rgba(255,77,109,0.6), 0 0 70px rgba(255,77,109,0.25);
+    }
+}
+
+/* Card body */
+.work-info {
+    padding: 18px 20px 20px;
+}
+
+.work-type {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #00abf0;
+    background: rgba(0,171,240,0.1);
+    border: 1px solid rgba(0,171,240,0.25);
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.work-info h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+
+.work-info p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #8ab4c8;
+    line-height: 1.6;
+}
+
+.work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.work-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(0,171,240,0.1);
+    color: #00abf0;
+    border: 1px solid rgba(0,171,240,0.28);
+}
+
+.work-cta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #00abf0;
+    letter-spacing: 0.3px;
+}
+
+.work-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.work-card:hover .work-arrow {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .works-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .work-preview-wrap {
+        height: 155px;
+    }
+    .work-iframe {
+        height: 460px;
+        transform: scale(0.26);
+        width: 384%;
+    }
+}
 </style>
 </head>
 
@@ -729,6 +968,7 @@ button:active { transform: translateY(0); }
         <li onclick="navClick('about')">About</li>
         <li onclick="navClick('skills')">Skills</li>
         <li onclick="navClick('projects')">Projects</li>
+        <li onclick="navClick('works')">Works</li>
         <li onclick="navClick('contact')">Contact</li>
     </ul>
 </nav>
@@ -754,7 +994,7 @@ BSc Computer Science student with a strong interest in developing practical and 
 <section class="stats">
     <div class="stat-card">
         <span class="stat-icon"></span>
-        <span class="stat-number" data-target="2" data-suffix="nd">0</span>
+        <span class="stat-number" data-target="3" data-suffix="rd">0</span>
         <span class="stat-label">Year Student</span>
     </div>
     <div class="stat-card">
@@ -787,11 +1027,11 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
 <section id="skills">
 <h2>Technical Skills</h2>
 <div class="skills">
-    <span>Java</span>
-    <span>Python</span>
+    <span>Full Stack Developer</span>
+    <span>App Development</span>
+    <span>Web Development</span>
     <span>Arduino</span>
     <span>IoT</span>
-    <span>Web Page</span>
     <span>Problem Solving</span>
     <span>Video Editing</span>
 </div>
@@ -804,33 +1044,104 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
 <div class="project" onclick="openPopup('popup-smartstick')">
     <h3>Smart Blind Stick</h3>
     <p>
-        Developed assistive device using Arduino and ultrasonic sensors
-        to detect obstacles and help visually impaired people.
+        A real-world assistive innovation — built an intelligent blind stick using <strong>Arduino</strong> and <strong>ultrasonic sensors</strong> that detects obstacles at multiple distances, triggering instant <strong>vibration and buzzer alerts</strong> to guide visually impaired users safely through any environment.
     </p>
 </div>
 
 <div class="project" onclick="openPopup('popup-bluetooth')">
     <h3>Bluetooth Terminal App</h3>
     <p>
-       Developed a mobile application that connects with Arduino via Bluetooth, receives real-time sensor data, and converts it into voice output using text-to-speech to assist users. 
+        Engineered a smart Android application that wirelessly pairs with an <strong>Arduino</strong> over Bluetooth, captures live sensor data in real time, and converts it into clear <strong>voice output via Text-to-Speech</strong> — making technology accessible and hands-free for users who need it most.
     </p>
 </div>
 
 <div class="project" onclick="openPopup('popup-webdev')">
     <h3>Web Development</h3>
     <p>
-        I have created a personal portfolio website using web development technologies like HTML, CSS, and JavaScript.
+        Designed and developed multiple fully responsive websites from scratch — including a live <strong>E-Commerce store (Lucky27)</strong>, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my own tech brand <strong>SpeedifyTechX</strong> — all built using <strong>HTML5, CSS3, and JavaScript</strong> with zero templates.
     </p>
 </div>
-
 
 <div class="project" onclick="openPopup('popup-paper')">
     <h3>Paper Presentation</h3>
     <p>
-        Presented technical concepts and improved communication skills.
+        Researched and presented cutting-edge topics in computer science at academic events — combining <strong>deep technical analysis</strong> with confident public communication to deliver impactful presentations that earned recognition among peers and faculty.
     </p>
 </div>
 
+</section>
+
+<!-- My Works -->
+<section id="works">
+<h2>My Works</h2>
+<p style="color:#8ab4c8; margin-bottom:32px; font-size:15px;">Live projects I've built and launched — click any card to visit the site.</p>
+
+<div class="works-grid">
+
+    <!-- E-commerce Website -->
+    <a class="work-card" href="https://lucky27.netlify.app/" target="_blank" rel="noopener noreferrer">
+        <div class="work-preview-wrap">
+            <iframe class="work-iframe" src="https://lucky27.netlify.app/" loading="lazy" scrolling="no" tabindex="-1" title="E-Commerce Website Preview"></iframe>
+            <div class="iframe-overlay"></div>
+            <div class="work-live-dot"><span></span> Live</div>
+        </div>
+        <div class="work-info">
+            <div class="work-type">E-Commerce</div>
+            <h3>Lucky27 Store</h3>
+            <p>A fully functional e-commerce storefront with product listings, a dynamic shopping cart, smooth UI interactions, and a clean modern design — built and deployed live on Netlify.</p>
+            <div class="work-tags">
+                <span class="work-tag">HTML</span>
+                <span class="work-tag">CSS</span>
+                <span class="work-tag">JavaScript</span>
+                <span class="work-tag">Netlify</span>
+            </div>
+            <div class="work-cta">Open Site <span class="work-arrow">→</span></div>
+        </div>
+    </a>
+
+    <!-- AI Chatbot -->
+    <a class="work-card" href="https://doccareai.onrender.com" target="_blank" rel="noopener noreferrer">
+        <div class="work-preview-wrap">
+            <iframe class="work-iframe" src="https://doccareai.onrender.com" loading="lazy" scrolling="no" tabindex="-1" title="DocCare AI Preview"></iframe>
+            <div class="iframe-overlay"></div>
+            <div class="work-live-dot"><span></span> Live</div>
+        </div>
+        <div class="work-info">
+            <div class="work-type">Artificial Intelligence</div>
+            <h3>DocCare AI</h3>
+            <p>An AI-powered healthcare chatbot that understands medical queries and delivers fast, reliable responses — making quality health guidance accessible to everyone, anytime.</p>
+            <div class="work-tags">
+                <span class="work-tag">AI</span>
+                <span class="work-tag">Python</span>
+                <span class="work-tag">Chatbot</span>
+                <span class="work-tag">Render</span>
+            </div>
+            <div class="work-cta">Open Site <span class="work-arrow">→</span></div>
+        </div>
+    </a>
+
+    <!-- SpeedifyTechX -->
+    <a class="work-card work-card--founder" href="https://speedifytechx.xyz/" target="_blank" rel="noopener noreferrer">
+        <div class="work-preview-wrap">
+            <iframe class="work-iframe" src="https://speedifytechx.xyz/" loading="lazy" scrolling="no" tabindex="-1" title="SpeedifyTechX Preview"></iframe>
+            <div class="iframe-overlay"></div>
+            <div class="work-live-dot"><span></span> Live</div>
+            <div class="work-founder-badge">★ Founder</div>
+        </div>
+        <div class="work-info">
+            <div class="work-type" style="color:#ff4d6d; border-color:rgba(255,77,109,0.3); background:rgba(255,77,109,0.08);">Founded by Me</div>
+            <h3>SpeedifyTechX</h3>
+            <p>The official website of the tech brand I founded — built to represent a vision of fast, innovative, and modern digital solutions that make a real difference.</p>
+            <div class="work-tags">
+                <span class="work-tag" style="color:#ff4d6d; border-color:rgba(255,77,109,0.35); background:rgba(255,77,109,0.1);">Founder</span>
+                <span class="work-tag">Tech Brand</span>
+                <span class="work-tag">Web</span>
+            </div>
+            <div class="work-cta">Open Site <span class="work-arrow">→</span></div>
+        </div>
+    </a>
+
+</div>
 </section>
 
 <!-- Contact -->
@@ -864,17 +1175,19 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
     <div class="popup-box">
         <button class="popup-close" onclick="closePopup('popup-smartstick')">✕</button>
         <h3>Smart Blind Stick</h3>
-        <p>An assistive device built with <strong>Arduino</strong> and <strong>ultrasonic sensors</strong> that detects obstacles in real time and alerts visually impaired users through vibration and audio feedback.</p>
-        <p><strong style="color:#00abf0">Tech Stack:</strong> Arduino, C/C++, Ultrasonic Sensor, Buzzer</p>
+        <p>A hardware-software solution designed to <strong>restore independence</strong> for visually impaired individuals. The stick uses <strong>ultrasonic sensors</strong> to detect obstacles at short, medium, and long ranges — triggering a calibrated buzzer and vibration motor to warn the user before a collision occurs.</p>
+        <p>This project was built with a focus on <strong>real-world usability</strong>, compact form factor, and low power consumption — making it practical for everyday use. It demonstrates how simple embedded components can create a meaningful social impact.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> Arduino Uno, C/C++, Ultrasonic Sensor (HC-SR04), Buzzer, Vibration Motor</p>
     </div>
 </div>
 
 <div class="popup-overlay" id="popup-bluetooth">
     <div class="popup-box">
         <button class="popup-close" onclick="closePopup('popup-bluetooth')">✕</button>
-        <h3> Bluetooth Terminal App</h3>
-        <p>A mobile application that pairs with Arduino over <strong>Bluetooth</strong>, receives live sensor data, and converts it to voice output using <strong>Text-to-Speech</strong> to assist users.</p>
-        <p><strong style="color:#00abf0">Tech Stack:</strong> Android, Bluetooth, Arduino, TTS API</p>
+        <h3>Bluetooth Terminal App</h3>
+        <p>A mobile application that bridges the gap between <strong>embedded hardware and everyday users</strong>. The app connects wirelessly to an Arduino via Bluetooth, receives live sensor readings, and converts them into natural <strong>voice output using Android's TTS engine</strong> — no screen needed.</p>
+        <p>Built with accessibility at its core, this app enables users to receive real-time environmental data <strong>completely hands-free</strong>, making it ideal for assistive technology use cases and IoT monitoring scenarios.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> Android Studio, Java, Bluetooth HC-05, Arduino, Text-to-Speech API</p>
     </div>
 </div>
 
@@ -882,8 +1195,9 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
     <div class="popup-box">
         <button class="popup-close" onclick="closePopup('popup-webdev')">✕</button>
         <h3>Web Development</h3>
-        <p>Designed and built a personal portfolio website from scratch using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong> — featuring smooth scrolling, animations, and a contact form.</p>
-        <p><strong style="color:#00abf0">Tech Stack:</strong> HTML5, CSS3, JavaScript</p>
+        <p>Built and deployed multiple real-world websites entirely from scratch — every line of code written by hand with no frameworks or templates. Projects include a live <strong>E-Commerce store (Lucky27)</strong> with product listings and cart, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my founded tech brand <strong>SpeedifyTechX</strong>.</p>
+        <p>Each site is built with a <strong>mobile-first mindset</strong> — featuring responsive layouts, smooth animations, and optimized performance. These aren't practice projects; they are <strong>live, working products</strong> used by real users.</p>
+        <p><strong style="color:#00abf0">Tech Stack:</strong> HTML5, CSS3, Vanilla JavaScript, Google Apps Script</p>
     </div>
 </div>
 
@@ -891,8 +1205,9 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
     <div class="popup-box">
         <button class="popup-close" onclick="closePopup('popup-paper')">✕</button>
         <h3>Paper Presentation</h3>
-        <p>Presented technical research papers on emerging topics in computer science, sharpening both <strong>communication</strong> and <strong>analytical skills</strong> in a competitive academic setting.</p>
-        <p><strong style="color:#00abf0">Skills:</strong> Research, Public Speaking, Technical Writing</p>
+        <p>Selected and presented <strong>technical research papers</strong> on emerging topics in computer science — including areas like IoT, assistive technology, and AI — at academic symposiums and college-level competitions.</p>
+        <p>Each presentation involved thorough literature review, structured argumentation, and clear <strong>visual communication of complex ideas</strong> to both technical and non-technical audiences, earning appreciation from faculty and fellow students.</p>
+        <p><strong style="color:#00abf0">Skills Demonstrated:</strong> Technical Research, Public Speaking, Data Visualization, Analytical Writing</p>
     </div>
 </div>
 
@@ -1108,7 +1423,7 @@ function showToast(message, type = 'success') {
 }
 
 /* Typing */
-const text = ["Java Developer", "IoT Developer", "Web Learner"];
+const text = ["Full Stack Developer", "App Developer", "Web Developer"];
 let i=0,j=0,current="",isDeleting=false;
 
 function type(){
@@ -1132,6 +1447,22 @@ type();
 function scrollToSection(id){
 document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
+
+/* ── Works Cards — stagger reveal ── */
+const workObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const cards = document.querySelectorAll('.work-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => card.classList.add('work-visible'), i * 150);
+            });
+            workObserver.disconnect();
+        }
+    });
+}, { threshold: 0.1 });
+
+const worksSection = document.getElementById('works');
+if (worksSection) workObserver.observe(worksSection);
 
 /* Contact Form */
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcSm9Y39eW0AIcarm93E9-RyO55tMFzsCeDJ68KBJOwhQwPdSIHkSEt0eM3z2H5_fL/exec';
