@@ -933,6 +933,91 @@ button:active { transform: translateY(0); }
     transform: translateX(5px);
 }
 
+/* ── Founder Spotlight Banner ── */
+.founder-spotlight {
+    margin-top: 36px;
+    border: 1px solid rgba(255,77,109,0.35);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,77,109,0.07) 0%, rgba(8,27,41,0.6) 100%);
+    padding: 24px 28px;
+    position: relative;
+    overflow: hidden;
+    animation: founderBorderPulse 3s ease-in-out infinite;
+}
+
+@keyframes founderBorderPulse {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(255,77,109,0.2), 0 0 20px rgba(255,77,109,0.08); }
+    50%       { box-shadow: 0 0 0 1px rgba(255,77,109,0.5), 0 0 35px rgba(255,77,109,0.18); }
+}
+
+.founder-spotlight::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff4d6d, transparent);
+}
+
+.founder-spotlight-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.founder-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255,77,109,0.1);
+    border: 2px solid rgba(255,77,109,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: founderIconGlow 2s ease-in-out infinite;
+}
+
+@keyframes founderIconGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,77,109,0.3); }
+    50%       { box-shadow: 0 0 22px rgba(255,77,109,0.7); }
+}
+
+.founder-spotlight-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #ff4d6d;
+    background: rgba(255,77,109,0.1);
+    border: 1px solid rgba(255,77,109,0.3);
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.founder-spotlight-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #b0c8d8;
+    line-height: 1.7;
+}
+
+.founder-spotlight-text strong {
+    color: #ff4d6d;
+}
+
+@media (max-width: 768px) {
+    .founder-spotlight-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .founder-spotlight {
+        padding: 20px 16px;
+    }
+}
+
 @media (max-width: 768px) {
     .works-grid {
         grid-template-columns: 1fr;
@@ -1058,7 +1143,7 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
 <div class="project" onclick="openPopup('popup-webdev')">
     <h3>Web Development</h3>
     <p>
-        Designed and developed multiple fully responsive websites from scratch — including a live <strong>E-Commerce store (Lucky27)</strong>, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my own tech brand <strong>SpeedifyTechX</strong> — all built using <strong>HTML5, CSS3, and JavaScript</strong> with zero templates.
+        Designed and developed multiple fully responsive websites from scratch — including a live <strong>E-Commerce store (Lucky)</strong>, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my own tech brand <strong>SpeedifyTechX</strong> — all built using <strong>HTML5, CSS3, and JavaScript</strong> with zero templates.
     </p>
 </div>
 
@@ -1087,7 +1172,7 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
         </div>
         <div class="work-info">
             <div class="work-type">E-Commerce</div>
-            <h3>Lucky27 Store</h3>
+            <h3>Lucky Store</h3>
             <p>A fully functional e-commerce storefront with product listings, a dynamic shopping cart, smooth UI interactions, and a clean modern design — built and deployed live on Netlify.</p>
             <div class="work-tags">
                 <span class="work-tag">HTML</span>
@@ -1141,6 +1226,41 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
         </div>
     </a>
 
+    <!-- Shadiees Art -->
+    <a class="work-card" href="#" target="_blank" rel="noopener noreferrer">
+        <div class="work-preview-wrap">
+            <iframe class="work-iframe" src="#" loading="lazy" scrolling="no" tabindex="-1" title="Shadiees Art Preview"></iframe>
+            <div class="iframe-overlay"></div>
+            <div class="work-live-dot"><span></span> Live</div>
+        </div>
+        <div class="work-info">
+            <div class="work-type">Art Gallery</div>
+            <h3>Shadiees Art</h3>
+            <p>A beautiful online art gallery showcasing original hand-drawn creations — including Mandalas, Ganesha art, Butterfly Mandala, and more. A creative space built to display and celebrate original artwork.</p>
+            <div class="work-tags">
+                <span class="work-tag">Art Gallery</span>
+                <span class="work-tag">Web Design</span>
+                <span class="work-tag">Creative</span>
+            </div>
+            <div class="work-cta">Open Site <span class="work-arrow">→</span></div>
+        </div>
+    </a>
+
+</div>
+
+<!-- Founder spotlight -->
+<div class="founder-spotlight">
+    <div class="founder-spotlight-inner">
+        <div class="founder-icon">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+        </div>
+        <div class="founder-spotlight-text">
+            <span class="founder-spotlight-label">Founder &amp; Creator</span>
+            <p>I am the <strong>Founder of SpeedifyTechX</strong> — a tech brand built from the ground up with a mission to deliver fast, innovative, and impactful digital solutions. Every project under SpeedifyTechX is designed, developed, and deployed by me.</p>
+        </div>
+    </div>
 </div>
 </section>
 
@@ -1195,7 +1315,7 @@ I am passionate about learning new technologies, enhancing my problem-solving sk
     <div class="popup-box">
         <button class="popup-close" onclick="closePopup('popup-webdev')">✕</button>
         <h3>Web Development</h3>
-        <p>Built and deployed multiple real-world websites entirely from scratch — every line of code written by hand with no frameworks or templates. Projects include a live <strong>E-Commerce store (Lucky27)</strong> with product listings and cart, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my founded tech brand <strong>SpeedifyTechX</strong>.</p>
+        <p>Built and deployed multiple real-world websites entirely from scratch — every line of code written by hand with no frameworks or templates. Projects include a live <strong>E-Commerce store (Lucky)</strong> with product listings and cart, an <strong>AI-powered healthcare chatbot (DocCare AI)</strong>, and the official website of my founded tech brand <strong>SpeedifyTechX</strong>.</p>
         <p>Each site is built with a <strong>mobile-first mindset</strong> — featuring responsive layouts, smooth animations, and optimized performance. These aren't practice projects; they are <strong>live, working products</strong> used by real users.</p>
         <p><strong style="color:#00abf0">Tech Stack:</strong> HTML5, CSS3, Vanilla JavaScript, Google Apps Script</p>
     </div>
